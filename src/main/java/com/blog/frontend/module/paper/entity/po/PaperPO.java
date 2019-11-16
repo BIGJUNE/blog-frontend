@@ -1,4 +1,4 @@
-package com.blog.frontend.module.paper.entity;
+package com.blog.frontend.module.paper.entity.po;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,7 +8,7 @@ import lombok.ToString;
 import java.util.List;
 
 /**
- * 文字详情DTO
+ * 文章po，对应paper表
  *
  * @author JerryGao 415309574@qq.com
  * @date 2019/11/16
@@ -17,14 +17,14 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PaperDetailDTO {
+public class PaperPO {
     private Integer id;
     private String title;
+    private String summary;
     private String text;
     private String createTime;
     private String updateTime;
-    private String readCount;
-    private String commentCount;
-    private String likeCount;
-    private List<String> tagList;
+    private Integer active;
+    private Integer enable;
+
 }

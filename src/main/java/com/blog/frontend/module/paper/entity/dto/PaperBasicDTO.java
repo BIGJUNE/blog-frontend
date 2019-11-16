@@ -1,4 +1,4 @@
-package com.blog.frontend.module.paper.entity;
+package com.blog.frontend.module.paper.entity.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

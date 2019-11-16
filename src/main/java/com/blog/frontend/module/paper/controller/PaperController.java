@@ -1,10 +1,8 @@
 package com.blog.frontend.module.paper.controller;
 
 import com.blog.frontend.common.RespResult;
-import com.blog.frontend.module.paper.entity.PaperBasicDTO;
-import com.blog.frontend.module.paper.entity.PaperDetailDTO;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
+import com.blog.frontend.module.paper.entity.dto.PaperBasicDTO;
+import com.blog.frontend.module.paper.entity.dto.PaperDetailDTO;
 import org.springframework.web.bind.annotation.*;
 
 /**

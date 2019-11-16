@@ -1,7 +1,7 @@
 package com.blog.frontend.module.paper.service.impl;
 
-import com.blog.frontend.module.paper.entity.PaperBasicDTO;
-import com.blog.frontend.module.paper.entity.PaperDetailDTO;
+import com.blog.frontend.module.paper.entity.dto.PaperBasicDTO;
+import com.blog.frontend.module.paper.entity.dto.PaperDetailDTO;
 import com.blog.frontend.module.paper.entity.PaperQuery;
 import com.blog.frontend.module.paper.service.IPaperService;
 import org.springframework.stereotype.Service;
