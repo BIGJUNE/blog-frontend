@@ -1,0 +1,1 @@
+[13:45:32:057] [WARN] - org.mybatis.logging.Logger.warn(Logger.java:44) - No MyBatis mapper was found in '[com.blog.frontend]' package. Please check your configuration.
