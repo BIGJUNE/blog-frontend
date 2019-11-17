@@ -4,6 +4,7 @@ import com.blog.frontend.module.paper.entity.dto.PaperBasicDTO;
 import com.blog.frontend.module.paper.entity.dto.PaperDetailDTO;
 import com.blog.frontend.module.paper.entity.PaperQuery;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -28,5 +29,5 @@ public interface IPaperDao {
      * @author JerryGao
      * @date 2019/11/16 15:38
      */
-    PaperDetailDTO getPaperDetail(Integer id);
+    PaperDetailDTO getPaperDetail(@Param("id") Integer id);
 }

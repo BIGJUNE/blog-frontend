@@ -17,13 +17,16 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PaperPO {
+public class PaperVO {
     private Integer id;
     private String title;
     private String summary;
     private String text;
     private String createTime;
     private String updateTime;
+    private Integer readCount;
+    private Integer commentCount;
+    private Integer likeCount;
     private Integer active;
     private Integer enable;
 

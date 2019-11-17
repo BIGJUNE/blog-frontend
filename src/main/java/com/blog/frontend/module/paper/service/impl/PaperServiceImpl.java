@@ -1,9 +1,11 @@
 package com.blog.frontend.module.paper.service.impl;
 
+import com.blog.frontend.module.paper.dao.IPaperDao;
 import com.blog.frontend.module.paper.entity.dto.PaperBasicDTO;
 import com.blog.frontend.module.paper.entity.dto.PaperDetailDTO;
 import com.blog.frontend.module.paper.entity.PaperQuery;
 import com.blog.frontend.module.paper.service.IPaperService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +19,9 @@ import java.util.List;
 @Service
 public class PaperServiceImpl implements IPaperService {
 
+    @Autowired
+    private IPaperDao paperDao;
+
     @Override
     public List<PaperBasicDTO> listPaperBasic(PaperQuery paperQuery) {
         return null;
@@ -24,6 +29,7 @@ public class PaperServiceImpl implements IPaperService {
 
     @Override
     public PaperDetailDTO getPaperDetail(Integer id) {
+
         return null;
     }
 }

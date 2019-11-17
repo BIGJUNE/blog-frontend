@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.UserMapper">
+
+<!--    <resultMap id="BaseResultMap" type="com.example.entity.User">-->
+<!--        <result column="id" jdbcType="INTEGER" property="id"/>-->
+<!--        <result column="userName" jdbcType="VARCHAR" property="userName"/>-->
+<!--        <result column="passWord" jdbcType="VARCHAR" property="passWord"/>-->
+<!--        <result column="realName" jdbcType="VARCHAR" property="realName"/>-->
+<!--    </resultMap>-->
+
+    <select id="getPaperDetail" resultType="com.blog.frontend.module.paper.entity.po.PaperVO">
+        SELECT p.id, p.title, p.text, p.create_time, p.update_time, prc.read_count, pl.like_count, temp.comment_count
+        FROM paper p
+        INNER JOIN paper_like pl on p.id = pl.paper_id
+        INNER JOIN paper_read_count prc on p.id = prc.paper_id
+        INNER JOIN (
+            SELECT count(*) AS comment_count, pc.paper_id
+            FROM paper_comment pc
+            WHERE pc.active = 1 and pc.enable = 1 and pc.paper_id = #{id}
+            GROUP BY paper_id
+        ) temp on temp.paper_id = p.id
+        where p.enable = 1 and p.active = 1 and p.id = #{id}
+    </select>
+
+</mapper>
