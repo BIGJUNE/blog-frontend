@@ -3,6 +3,8 @@ package com.blog.frontend.module.paper.dao;
 import com.blog.frontend.module.paper.entity.dto.PaperBasicDTO;
 import com.blog.frontend.module.paper.entity.dto.PaperDetailDTO;
 import com.blog.frontend.module.paper.entity.PaperQuery;
+import com.blog.frontend.module.paper.entity.po.PaperVO;
+import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,7 +21,7 @@ public interface IPaperDao {
      * @author JerryGao
      * @date 2019/11/16 15:37
      */
-    List<PaperBasicDTO> listPaperBasic(PaperQuery paperQuery);
+    Page<PaperVO> listPaperBasic(PaperQuery paperQuery);
 
     /**
      * 根据id获取文章的详情信息
@@ -29,5 +31,5 @@ public interface IPaperDao {
      * @author JerryGao
      * @date 2019/11/16 15:38
      */
-    PaperDetailDTO getPaperDetail(@Param("id") Integer id);
+    PaperVO getPaperDetail(@Param("id") Integer id);
 }

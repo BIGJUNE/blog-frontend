@@ -1,5 +1,6 @@
 package com.blog.frontend.module.paper.entity.dto;
 
+import io.swagger.models.auth.In;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,8 +24,8 @@ public class PaperDetailDTO {
     private String text;
     private String createTime;
     private String updateTime;
-    private String readCount;
-    private String commentCount;
-    private String likeCount;
+    private Integer readCount;
+    private Integer commentCount;
+    private Integer likeCount;
     private List<String> tagList;
 }

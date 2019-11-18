@@ -1,5 +1,6 @@
 package com.blog.frontend.util;
 
+import com.blog.frontend.common.BaseQuery;
 import com.github.pagehelper.PageHelper;
 
 public class PageUtils {
@@ -10,6 +11,10 @@ public class PageUtils {
 
     private PageUtils() {
 
+    }
+
+    public static void paging(BaseQuery baseQuery) {
+        PageUtils.paging(baseQuery.getCurPage(), baseQuery.getPerPage());
     }
 
     public static void paging(Integer curPage, Integer perPage) {
@@ -23,7 +28,7 @@ public class PageUtils {
         }
 
         // 不进行分页
-        if (perPage == DISABLE_PAGING) {
+        if (DISABLE_PAGING.equals(perPage)) {
             PageHelper.clearPage();
         } else {
             PageHelper.startPage(curPage, perPage);

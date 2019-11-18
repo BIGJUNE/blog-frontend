@@ -23,8 +23,8 @@ public class PaperBasicDTO {
     private String summary;
     private String createTime;
     private String updateTime;
-    private String readCount;
-    private String commentCount;
-    private String likeCount;
+    private Integer readCount;
+    private Integer commentCount;
+    private Integer likeCount;
     private List<String> tagList;
 }
