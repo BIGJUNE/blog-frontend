@@ -2,12 +2,10 @@ package com.blog.frontend.module.tag.controller;
 
 import com.blog.frontend.common.PageDTO;
 import com.blog.frontend.common.RespResult;
+import com.blog.frontend.module.tag.entity.TagPO;
 import com.blog.frontend.module.tag.service.ITagService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * TODO
@@ -22,7 +20,7 @@ public class TagController {
     private ITagService tagService;
 
     @GetMapping
-    public RespResult<PageDTO<String>> listTags(@RequestParam("tag_name") String tagName) {
+    public RespResult<PageDTO<String>> listTags(@RequestParam(value = "tag_name", required = false) String tagName) {
         return RespResult.success(tagService.listTagsByTagName(tagName));
     }
 }

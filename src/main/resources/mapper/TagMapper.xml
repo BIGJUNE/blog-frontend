@@ -3,12 +3,12 @@
 <mapper namespace="com.blog.frontend.module.tag.dao.ITagDao">
 
     <select id="listTagName" resultType="string">
-        SELECT t.tag_name FROM tag t
+        SELECT distinct t.tag_name FROM tag t
         <where>
-            <if test="tagPO.paperId != null ">
+            <if test="paperId != null ">
                 t.paper_id = #{paperId};
             </if>
-            <if test="tagPo.tagName != null and !tagPo.tagName.isEmpty()">
+            <if test="tagName != null and !tagName.isEmpty()">
                 instr(t.tag_name, #{tagName}) > 0
             </if>
         </where>
@@ -26,7 +26,7 @@
     </select>
 
     <insert id="createTag" parameterType="TagPO">
-        INSERT INTO tag(paper_id, tag_name) VALUES (#{paperId}, #{tagName})
+        INSERT INTO tag(paper_id, tag_name) VALUES (#{paperId}, #{tangName})
     </insert>
 
 </mapper>

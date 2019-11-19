@@ -43,4 +43,9 @@
         </where>
     </select>
 
+    <insert id="create" parameterType="PaperPo">
+        INSERT INTO paper(title, text, create_time, update_time, active, enable, summary, read_count)
+        VALUES(#{title}, #{text}, #{createTime}, #{updateTime}, #{active}, #{enable}, #{summary}, #{readCount})
+    </insert>
+
 </mapper>

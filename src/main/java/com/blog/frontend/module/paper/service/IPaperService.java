@@ -38,4 +38,15 @@ public interface IPaperService {
      * @throws BaseException 通用异常
      */
     PaperDetailDTO getPaperDetail(Integer id) throws BaseException;
+    
+    /**
+     * TODO
+     * 
+     * @param paperDetailDTO
+     * @return void
+     * @author JerryGao
+     * @date 2019/11/20 0:41
+     */
+    void createPaper(PaperDetailDTO paperDetailDTO);
+        
 }

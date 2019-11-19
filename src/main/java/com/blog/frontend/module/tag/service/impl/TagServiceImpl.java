@@ -52,6 +52,8 @@ public class TagServiceImpl implements ITagService {
         Map<Integer, PaperBasicDTO> paperBasicDict = paperBasicList.stream()
                 .collect(Collectors.toMap(PaperBasicDTO::getId, paperBasicDTO -> paperBasicDTO));
 
+
+        // 遍历tag，贴在对应Paper上
         List<TagPO> tagList = tagDao.listTagsByPaperIdList(new ArrayList<>(paperBasicDict.keySet()));
         tagList.forEach( item -> {
             PaperBasicDTO paperBasicDTO = paperBasicDict.get(item.getPaperId());

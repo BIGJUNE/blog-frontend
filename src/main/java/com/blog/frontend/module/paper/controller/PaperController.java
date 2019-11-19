@@ -6,9 +6,14 @@ import com.blog.frontend.exception.BaseException;
 import com.blog.frontend.module.paper.entity.PaperQuery;
 import com.blog.frontend.module.paper.entity.dto.PaperBasicDTO;
 import com.blog.frontend.module.paper.entity.dto.PaperDetailDTO;
+import com.blog.frontend.module.paper.entity.po.PaperVO;
 import com.blog.frontend.module.paper.service.IPaperService;
+import com.blog.frontend.util.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.beans.Transient;
 
 /**
  * 文章模块的Controller
@@ -41,5 +46,12 @@ public class PaperController {
         PageDTO<PaperBasicDTO> result = paperService.listPaperBasic(paperQuery);
 
         return RespResult.success(result);
+    }
+
+    @PostMapping("/paper")
+    @Transactional(rollbackFor = Exception.class)
+    public RespResult createPaper(@RequestBody PaperBasicDTO paperBasicDTO) throws BaseException {
+        PaperVO paperVO = CommonUtils.copyBean(paperBasicDTO, PaperVO.class);
+
     }
 }

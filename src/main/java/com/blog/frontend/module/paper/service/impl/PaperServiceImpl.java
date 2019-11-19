@@ -56,4 +56,10 @@ public class PaperServiceImpl implements IPaperService {
 
         return paperDetailDto;
     }
+
+
+    @Override
+    public void createPaper(PaperDetailDTO paperDetailDTO) {
+
+    }
 }
