@@ -8,4 +8,5 @@ package com.blog.frontend.common;
  */
 public class Constant {
     public static final Integer DEFAULT_PER_PAGE = 10;
+    public static final Integer VERSION_INIT = 0;
 }

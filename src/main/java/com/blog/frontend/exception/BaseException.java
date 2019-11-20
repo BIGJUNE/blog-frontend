@@ -20,8 +20,8 @@ public class BaseException extends Exception{
         this.errorCode = errorCode.getCode();
     }
 
-    public BaseException(ErrorCodeEnum errorCode, String additionalMsg) {
-        super(String.format((errorCode.getMessage() + "(%s)"), additionalMsg));
+    public BaseException(ErrorCodeEnum errorCode, Object... additionalMsgs) {
+        super(String.format(errorCode.getMessage(), additionalMsgs));
         this.errorCode = errorCode.getCode();
     }
 

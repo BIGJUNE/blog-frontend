@@ -25,8 +25,14 @@
         </where>
     </select>
 
-    <insert id="createTag" parameterType="TagPO">
+    <insert id="createTag">
         INSERT INTO tag(paper_id, tag_name) VALUES (#{paperId}, #{tangName})
+        <foreach collection="tagList" index="index" item="item" separator=",">
+            (#{item.paperId}, #{item.tangName})
+        </foreach>
     </insert>
 
+    <delete id="deleteTagByPaperId">
+        DELETE FROM tag t WHERE t.paperId = #{paperId}
+    </delete>
 </mapper>

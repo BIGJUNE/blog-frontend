@@ -1,21 +1,27 @@
 package com.blog.frontend.module.paper.service.impl;
 
+import com.blog.frontend.common.Constant;
 import com.blog.frontend.common.PageDTO;
 import com.blog.frontend.exception.BaseException;
+import com.blog.frontend.module.entity.LikePO;
+import com.blog.frontend.module.like.service.ILikeService;
 import com.blog.frontend.module.paper.dao.IPaperDao;
 import com.blog.frontend.module.paper.entity.dto.PaperBasicDTO;
 import com.blog.frontend.module.paper.entity.dto.PaperDetailDTO;
 import com.blog.frontend.module.paper.entity.PaperQuery;
 import com.blog.frontend.module.paper.entity.po.PaperVO;
 import com.blog.frontend.module.paper.service.IPaperService;
+import com.blog.frontend.module.tag.entity.TagPO;
 import com.blog.frontend.module.tag.service.ITagService;
 import com.blog.frontend.util.CommonUtils;
 import com.blog.frontend.util.PageUtils;
 import com.github.pagehelper.Page;
+import org.apache.tomcat.util.bcel.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * TODO
@@ -31,6 +37,11 @@ public class PaperServiceImpl implements IPaperService {
 
     @Autowired
     private ITagService tagService;
+
+    @Autowired
+    private ILikeService likeService;
+
+    private static final int LIKE_DEFAULT_AMOUNT = 0;
 
     @Override
     public PageDTO<PaperBasicDTO> listPaperBasic(PaperQuery paperQuery) throws BaseException {
@@ -59,7 +70,21 @@ public class PaperServiceImpl implements IPaperService {
 
 
     @Override
-    public void createPaper(PaperDetailDTO paperDetailDTO) {
+    public void createPaper(PaperDetailDTO paperDetailDTO) throws BaseException {
+        PaperVO paperVO = CommonUtils.copyBean(paperDetailDTO, PaperVO.class);
+        paperDao.createPaper(paperVO);
 
+        // 创建标签
+        if (!paperDetailDTO.getTagList().isEmpty()) {
+            Integer paperId = paperDetailDTO.getId();
+            List<TagPO> tagList = paperDetailDTO.getTagList()
+                    .stream()
+                    .map(tagName -> new TagPO(paperId, tagName))
+                    .collect(Collectors.toList());
+            tagService.createTag(tagList);
+        }
+
+        // 为文字创建点赞数
+        likeService.createLike(new LikePO(paperDetailDTO.getId(), LIKE_DEFAULT_AMOUNT, Constant.VERSION_INIT));
     }
 }

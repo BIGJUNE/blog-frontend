@@ -50,8 +50,8 @@ public class PaperController {
 
     @PostMapping("/paper")
     @Transactional(rollbackFor = Exception.class)
-    public RespResult createPaper(@RequestBody PaperBasicDTO paperBasicDTO) throws BaseException {
-        PaperVO paperVO = CommonUtils.copyBean(paperBasicDTO, PaperVO.class);
-
+    public RespResult createPaper(@RequestBody PaperDetailDTO paperDetailDTO) throws BaseException {
+        paperService.createPaper(paperDetailDTO);
+        return RespResult.success();
     }
 }

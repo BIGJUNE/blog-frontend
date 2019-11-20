@@ -38,12 +38,12 @@ public interface ITagDao {
     List<TagPO> listTagsByPaperIdList(List<Integer> paperIdList);
 
     /**
-     * 创建标签
+     * 批量创建标签
      *
-     * @param tagPO
+     * @param tagList 标题列表
      * @return java.lang.Integer
      * @author JerryGao
      * @date 2019/11/18 23:04
      */
-    Integer createTag(TagPO tagPO);
+    Integer createTag(@Param("tagList") List<TagPO> tagList);
 }

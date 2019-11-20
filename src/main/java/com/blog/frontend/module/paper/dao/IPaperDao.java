@@ -32,4 +32,14 @@ public interface IPaperDao {
      * @date 2019/11/16 15:38
      */
     PaperVO getPaperDetail(@Param("id") Integer id);
+
+    /**
+     * 创建文章
+     *
+     * @param paperVO
+     * @return java.lang.Integer
+     * @author JerryGao
+     * @date 2019/11/20 22:59
+     */
+    Integer createPaper(PaperVO paperVO);
 }

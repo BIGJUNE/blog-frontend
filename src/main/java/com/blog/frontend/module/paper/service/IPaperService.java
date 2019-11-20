@@ -47,6 +47,6 @@ public interface IPaperService {
      * @author JerryGao
      * @date 2019/11/20 0:41
      */
-    void createPaper(PaperDetailDTO paperDetailDTO);
+    void createPaper(PaperDetailDTO paperDetailDTO) throws BaseException;
         
 }
