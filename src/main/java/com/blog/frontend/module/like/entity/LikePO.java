@@ -1,4 +1,4 @@
-package com.blog.frontend.module.entity;
+package com.blog.frontend.module.like.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,6 +1,6 @@
 package com.blog.frontend.module.like.dao;
 
-import com.blog.frontend.module.entity.LikePO;
+import com.blog.frontend.module.like.entity.LikePO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

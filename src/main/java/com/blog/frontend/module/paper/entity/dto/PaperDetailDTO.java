@@ -28,4 +28,5 @@ public class PaperDetailDTO {
     private Integer commentCount;
     private Integer likeCount;
     private List<String> tagList;
+    private Integer menuId;
 }

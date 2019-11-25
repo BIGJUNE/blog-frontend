@@ -1,7 +1,7 @@
 package com.blog.frontend.module.like.service;
 
 import com.blog.frontend.exception.BaseException;
-import com.blog.frontend.module.entity.LikePO;
+import com.blog.frontend.module.like.entity.LikePO;
 
 /**
  * TODO
@@ -25,7 +25,7 @@ public interface ILikeService {
      * TODO
      *
      * @param paperId 文章Id
-     * @return com.blog.frontend.module.entity.LikePO
+     * @return com.blog.frontend.module.like.entity.LikePO
      * @author JerryGao
      * @date 2019/11/21 0:16
      */

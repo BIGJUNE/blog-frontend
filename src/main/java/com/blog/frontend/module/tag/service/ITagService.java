@@ -50,4 +50,13 @@ public interface ITagService {
      * @date 2019/11/20 23:06 
      */
     Integer createTag(List<TagPO> tagList);
+
+    /**
+     * 删除掉没用的tag
+     *
+     * @param paperId 文章的id
+     * @author JerryGao
+     * @date 2019/11/25 1:31
+     */
+    void deleteTagByPaperId(Integer paperId);
 }

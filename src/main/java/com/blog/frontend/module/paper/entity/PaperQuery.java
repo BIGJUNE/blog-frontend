@@ -19,4 +19,5 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 public class PaperQuery extends BaseQuery {
     private String title;
+    private Integer menuId;
 }

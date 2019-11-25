@@ -5,6 +5,8 @@ server:
 spring:
   profiles:
     active: dev
+  jackson:
+    property-naming-strategy: CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
   type-aliases-package: com.blog.frontend.module.*.entity

@@ -3,31 +3,24 @@ package com.blog.frontend.module.paper.entity.po;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
-
-import java.util.List;
 
 /**
- * 文章po，对应paper表
+ * TODO
  *
  * @author JerryGao 415309574@qq.com
- * @date 2019/11/16
+ * @date 2019/11/24
  */
-@ToString
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PaperVO {
+public class PaperPO {
     private Integer id;
     private String title;
-    private String summary;
-    private String text;
-    private String createTime;
+    private String creatTime;
     private String updateTime;
-    private Integer readCount;
-    private Integer commentCount;
-    private Integer likeCount;
     private Integer active;
     private Integer enable;
+    private String summary;
+    private Integer readCount;
     private Integer menuId;
 }

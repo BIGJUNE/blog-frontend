@@ -12,7 +12,9 @@ public enum ErrorCodeEnum {
      */
     UNKNOWN_EXCEPTION(-1, "系统内部异常"),
 
-    OBJECT_REPEAT(-2, "%s已存在")
+    OBJECT_REPEAT(-2, "%s已存在"),
+
+    OBJECT_NON_EXISTENCE(-3, "%s不存在")
     ;
     private int code;
     private String message;

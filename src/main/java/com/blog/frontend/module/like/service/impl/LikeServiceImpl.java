@@ -2,7 +2,7 @@ package com.blog.frontend.module.like.service.impl;
 
 import com.blog.frontend.exception.BaseException;
 import com.blog.frontend.exception.ErrorCodeEnum;
-import com.blog.frontend.module.entity.LikePO;
+import com.blog.frontend.module.like.entity.LikePO;
 import com.blog.frontend.module.like.dao.ILikeDao;
 import com.blog.frontend.module.like.service.ILikeService;
 import org.springframework.beans.factory.annotation.Autowired;

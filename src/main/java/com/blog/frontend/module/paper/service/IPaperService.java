@@ -40,13 +40,41 @@ public interface IPaperService {
     PaperDetailDTO getPaperDetail(Integer id) throws BaseException;
     
     /**
-     * TODO
+     * 创建文章
      * 
      * @param paperDetailDTO
-     * @return void
      * @author JerryGao
      * @date 2019/11/20 0:41
+     * @throws BaseException 通用异常
      */
     void createPaper(PaperDetailDTO paperDetailDTO) throws BaseException;
+
+    /**
+     * 编辑文章
+     *
+     * @param paperDetailDTO
+     * @author JerryGao
+     * @date 2019/11/20 0:41
+     * @throws BaseException 通用异常
+     */
+    void updatePaper(PaperDetailDTO paperDetailDTO) throws BaseException;
+
+    /**
+     * 删除文章
+     *
+     * @param paperId 文章的id
+     * @author JerryGao
+     * @date 2019/11/25 0:49
+     */
+    void deletePaper(Integer paperId) throws BaseException;
+
+    /**
+     * 激活or禁用一篇文章
+     *
+     * @param paperId 文章id
+     * @author JerryGao
+     * @date 2019/11/25 0:50
+     */
+    void enablePaper(Integer paperId) throws BaseException;
         
 }

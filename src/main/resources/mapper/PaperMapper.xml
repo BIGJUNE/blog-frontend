@@ -43,9 +43,38 @@
         </where>
     </select>
 
-    <insert id="create" parameterType="PaperPo">
+    <insert id="create" parameterType="PaperPO">
         INSERT INTO paper(title, text, create_time, update_time, active, enable, summary, read_count)
-        VALUES(#{title}, #{text}, #{createTime}, #{updateTime}, #{active}, #{enable}, #{summary}, #{readCount})
+        VALUES(#{title}, #{text}, sysdate(), #{updateTime}, #{active}, #{enable}, #{summary}, #{readCount})
     </insert>
+
+    <update id="updatePaper" parameterType="PaperPO">
+        UPDATE paper t
+        <set>
+            <if test="title != null and !title.isEmpty()">
+                t.title = #{title},
+            </if>
+            <if test="text != null and !text.isEmpty()">
+                t.text = #{text},
+            </if>
+            <if test="menuId != null">
+                t.menu_id = #{menuId},
+            </if>
+            t.update_time = sysdate()
+        </set>
+        where t.id = #{id}
+    </update>
+
+    <update id="enablePaper">
+        UPDATE paper t
+        SET t.enable = 1 - t.enable
+        WHERE t.id = #{paper_id}
+    </update>
+
+    <update id="deletePaper">
+        UPDATE paper t
+        SET t.active = 0
+        WHERE t.id = #{paper_id}
+    </update>
 
 </mapper>

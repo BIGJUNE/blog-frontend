@@ -48,10 +48,25 @@ public class PaperController {
         return RespResult.success(result);
     }
 
-    @PostMapping("/paper")
-    @Transactional(rollbackFor = Exception.class)
+    @PostMapping
     public RespResult createPaper(@RequestBody PaperDetailDTO paperDetailDTO) throws BaseException {
         paperService.createPaper(paperDetailDTO);
         return RespResult.success();
+    }
+
+    @PutMapping("/{paper_id}")
+    public RespResult updatePaper(@PathVariable("paper_id") Integer paperId,
+                                  @RequestBody PaperDetailDTO paperDetailDTO) {
+        return null;
+    }
+
+    @PutMapping("/{paper_id}/enable")
+    public RespResult enablePaper(@PathVariable("paper_id") Integer paperId) {
+        return null;
+    }
+
+    @DeleteMapping("/{paper_id}")
+    public RespResult deletePaper(@PathVariable("paper_id") Integer paperId) {
+        return null;
     }
 }
