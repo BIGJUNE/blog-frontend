@@ -46,4 +46,14 @@ public interface ITagDao {
      * @date 2019/11/18 23:04
      */
     Integer createTag(@Param("tagList") List<TagPO> tagList);
+
+    /**
+     * 删除文章
+     *
+     * @param paperId 文章id
+     * @return java.lang.Integer
+     * @author JerryGao
+     * @date 2019/11/30 12:01
+     */
+    Integer deleteTagByPaperId(@Param("paperId") Integer paperId);
 }

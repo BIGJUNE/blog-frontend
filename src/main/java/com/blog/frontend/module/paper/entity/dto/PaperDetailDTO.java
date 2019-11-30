@@ -24,9 +24,11 @@ public class PaperDetailDTO {
     private String text;
     private String createTime;
     private String updateTime;
+    private String summary;
     private Integer readCount;
     private Integer commentCount;
     private Integer likeCount;
     private List<String> tagList;
     private Integer menuId;
+    private Integer enable;
 }

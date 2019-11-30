@@ -3,21 +3,21 @@
 <mapper namespace="com.blog.frontend.module.paper.dao.IPaperDao">
 
     <select id="getPaperDetail" resultType="PaperVO">
-        SELECT p.id, p.title, p.text, p.create_time, p.update_time, prc.read_count, pl.like_count,
+        SELECT p.id, p.title, p.text, p.create_time, p.update_time, p.read_count, pl.like_count, p.summary, p.menu_id,
+            p.enable,
             case
                 when temp.comment_count is null then 0
                 else temp.comment_count
             end as comment_count
         FROM paper p
         INNER JOIN paper_like pl on p.id = pl.paper_id
-        INNER JOIN paper_read_count prc on p.id = prc.paper_id
         LEFT JOIN (
             SELECT count(*) AS comment_count, pc.paper_id
             FROM paper_comment pc
             WHERE pc.active = 1 and pc.enable = 1 and pc.paper_id = #{id}
             GROUP BY paper_id
         ) temp on temp.paper_id = p.id
-        where p.enable = 1 and p.active = 1 and p.id = #{id}
+        where p.active = 1 and p.id = #{id}
     </select>
 
     <select id="listPaperBasic" resultType="PaperVO" parameterType="PaperQuery">
@@ -43,9 +43,9 @@
         </where>
     </select>
 
-    <insert id="create" parameterType="PaperPO">
-        INSERT INTO paper(title, text, create_time, update_time, active, enable, summary, read_count)
-        VALUES(#{title}, #{text}, sysdate(), #{updateTime}, #{active}, #{enable}, #{summary}, #{readCount})
+    <insert id="createPaper" parameterType="PaperPO" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO paper(title, text, create_time, summary, menu_id)
+        VALUES(#{title}, #{text}, sysdate(), #{summary}, #{menuId})
     </insert>
 
     <update id="updatePaper" parameterType="PaperPO">

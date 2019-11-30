@@ -7,7 +7,7 @@ import com.blog.frontend.exception.ErrorCodeEnum;
 import com.blog.frontend.module.like.entity.LikePO;
 import com.blog.frontend.module.like.service.ILikeService;
 import com.blog.frontend.module.paper.dao.IPaperDao;
-import com.blog.frontend.module.paper.entity.dto.PaperBasicDTO;
+import com.blog.frontend.module.paper.entity.dto.PaperSimpleDTO;
 import com.blog.frontend.module.paper.entity.dto.PaperDetailDTO;
 import com.blog.frontend.module.paper.entity.PaperQuery;
 import com.blog.frontend.module.paper.entity.po.PaperPO;
@@ -20,6 +20,7 @@ import com.blog.frontend.util.PageUtils;
 import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,6 +34,8 @@ import java.util.stream.Collectors;
 @Service
 public class PaperServiceImpl implements IPaperService {
 
+    private final static String OBJECT_NAME = "文章";
+
     @Autowired
     private IPaperDao paperDao;
 
@@ -44,17 +47,19 @@ public class PaperServiceImpl implements IPaperService {
 
     private static final int LIKE_DEFAULT_AMOUNT = 0;
 
+    private static final int SUMMARY_LENGTH = 90;
+
     @Override
-    public PageDTO<PaperBasicDTO> listPaperBasic(PaperQuery paperQuery) throws BaseException {
+    public PageDTO<PaperSimpleDTO> listPaperBasic(PaperQuery paperQuery) throws BaseException {
 
         PageUtils.paging(paperQuery);
         Page<PaperVO> paperVOList = paperDao.listPaperBasic(paperQuery);
-        List<PaperBasicDTO> paperBasicDTOList = CommonUtils.copyBeanList(paperVOList, PaperBasicDTO.class);
+        List<PaperSimpleDTO> paperSimpleDTOList = CommonUtils.copyBeanList(paperVOList, PaperSimpleDTO.class);
 
         // 加上标签
-        tagService.bindTags2PaperList(paperBasicDTOList);
+        tagService.listTagsByPapers(paperSimpleDTOList);
 
-        return new PageDTO<>(paperVOList.getTotal(), paperBasicDTOList);
+        return new PageDTO<>(paperVOList.getTotal(), paperSimpleDTOList);
     }
 
     @Override
@@ -62,22 +67,25 @@ public class PaperServiceImpl implements IPaperService {
 
         PaperVO paperVo = paperDao.getPaperDetail(id);
         PaperDetailDTO paperDetailDto = CommonUtils.copyBean(paperVo, PaperDetailDTO.class);
-
-        // 加上标签
-        tagService.bindTags2Paper(paperDetailDto);
+        tagService.listTagsByPaper(paperDetailDto);
 
         return paperDetailDto;
     }
 
 
     @Override
-    public void createPaper(PaperDetailDTO paperDetailDTO) throws BaseException {
+    @Transactional(rollbackFor = Exception.class)
+    public Integer createPaper(PaperDetailDTO paperDetailDTO) throws BaseException {
         PaperPO paperPO = CommonUtils.copyBean(paperDetailDTO, PaperPO.class);
+        String text = paperPO.getText();
+        int summaryLength = Math.min(SUMMARY_LENGTH, text.length());
+        String summary = paperPO.getText().substring(0, summaryLength) + "...";
+        paperPO.setSummary(summary);
         paperDao.createPaper(paperPO);
 
+        Integer paperId = paperPO.getId();
         // 创建标签
         if (!paperDetailDTO.getTagList().isEmpty()) {
-            Integer paperId = paperDetailDTO.getId();
             List<TagPO> tagList = paperDetailDTO.getTagList()
                     .stream()
                     .map(tagName -> new TagPO(paperId, tagName))
@@ -86,28 +94,31 @@ public class PaperServiceImpl implements IPaperService {
         }
 
         // 为文字创建点赞数
-        likeService.createLike(new LikePO(paperDetailDTO.getId(), LIKE_DEFAULT_AMOUNT, Constant.VERSION_INIT));
+        likeService.createLike(new LikePO(paperId, LIKE_DEFAULT_AMOUNT, Constant.VERSION_INIT));
+
+        return paperId;
     }
 
     @Override
     public void updatePaper(PaperDetailDTO paperDetailDTO) throws BaseException {
         PaperPO paperPO = CommonUtils.copyBean(paperDetailDTO, PaperPO.class);
         if (0 == paperDao.updatePaper(paperPO)) {
-            throw new BaseException(ErrorCodeEnum.OBJECT_NON_EXISTENCE, "文章");
+            throw new BaseException(ErrorCodeEnum.OBJECT_NON_EXISTENCE, OBJECT_NAME);
         }
     }
 
     @Override
     public void deletePaper(Integer paperId) throws BaseException {
         if (0 == paperDao.deletePaper(paperId)) {
-            throw new BaseException(ErrorCodeEnum.OBJECT_NON_EXISTENCE, "文章");
+            throw new BaseException(ErrorCodeEnum.OBJECT_NON_EXISTENCE, OBJECT_NAME);
         }
+
     }
 
     @Override
     public void enablePaper(Integer paperId) throws BaseException {
         if (0 == paperDao.enablePaper(paperId)) {
-            throw new BaseException(ErrorCodeEnum.OBJECT_NON_EXISTENCE, "文章");
+            throw new BaseException(ErrorCodeEnum.OBJECT_NON_EXISTENCE, OBJECT_NAME);
         }
     }
 }

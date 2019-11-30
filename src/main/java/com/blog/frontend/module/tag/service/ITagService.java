@@ -1,7 +1,7 @@
 package com.blog.frontend.module.tag.service;
 
 import com.blog.frontend.common.PageDTO;
-import com.blog.frontend.module.paper.entity.dto.PaperBasicDTO;
+import com.blog.frontend.module.paper.entity.dto.PaperSimpleDTO;
 import com.blog.frontend.module.paper.entity.dto.PaperDetailDTO;
 import com.blog.frontend.module.tag.entity.TagPO;
 
@@ -12,24 +12,24 @@ import java.util.List;
  * @date 2019/11/16
  */
 public interface ITagService {
+
     /**
-     * 给paper加上tag
+     * 获取paper的标签
      *
-     * @param paperDetailDTO paper对象
-     * @return 查询结果
+     * @param PaperDetailDTO paper对象列表
      * @author JerryGao
      * @date 2019/11/16 15:37
      */
-    void bindTags2Paper(PaperDetailDTO paperDetailDTO);
+    void listTagsByPaper(PaperDetailDTO PaperDetailDTO);
 
     /**
      * 给paper列表中的所有paper加上tag
      *
-     * @param paperBasicDTOList paper对象列表
+     * @param paperSimpleDTOList paper对象列表
      * @author JerryGao
      * @date 2019/11/16 15:37
      */
-    void bindTags2PaperList(List<PaperBasicDTO> paperBasicDTOList);
+    void listTagsByPapers(List<PaperSimpleDTO> paperSimpleDTOList);
 
     /**
      * 模糊搜索获得匹配的标签列表
@@ -45,7 +45,8 @@ public interface ITagService {
      * 创建标贴
      * 
      * @param tagList tag列表
-     * @return java.lang.Integer
+     * @return java.lang.Integer看了，哦、，
+     * 【】‘【】’
      * @author JerryGao
      * @date 2019/11/20 23:06 
      */

@@ -2,8 +2,7 @@ package com.blog.frontend.module.tag.service.impl;
 
 import com.blog.frontend.common.Constant;
 import com.blog.frontend.common.PageDTO;
-import com.blog.frontend.module.paper.entity.PaperQuery;
-import com.blog.frontend.module.paper.entity.dto.PaperBasicDTO;
+import com.blog.frontend.module.paper.entity.dto.PaperSimpleDTO;
 import com.blog.frontend.module.paper.entity.dto.PaperDetailDTO;
 import com.blog.frontend.module.tag.dao.ITagDao;
 import com.blog.frontend.module.tag.entity.TagPO;
@@ -15,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -32,41 +32,43 @@ public class TagServiceImpl implements ITagService {
     private ITagDao tagDao;
 
     @Override
-    public void bindTags2Paper(PaperDetailDTO paperDetailDTO) {
-        Integer paperId = paperDetailDTO.getId();
-
-        TagQuery tagQuery = new TagQuery();
-        tagQuery.setPaperId(paperId);
-        List<String> tagList = tagDao.listTagName(tagQuery);
-        paperDetailDTO.setTagList(tagList);
+    public void listTagsByPaper(PaperDetailDTO paperDetailDTO) {
+        List<TagPO> tagList = tagDao.listTagsByPaperIdList(Arrays.asList(paperDetailDTO.getId()));
+        List<String> tagNameList = tagList.stream().map(TagPO::getTagName).collect(Collectors.toList());
+        paperDetailDTO.setTagList(tagNameList);
     }
 
     @Override
-    public void bindTags2PaperList(List<PaperBasicDTO> paperBasicList) {
+    public void listTagsByPapers(List<PaperSimpleDTO> paperBasicList) {
 
         if (paperBasicList.isEmpty()) {
             return;
         }
 
-        // 构造字典
-        Map<Integer, PaperBasicDTO> paperBasicDict = paperBasicList.stream()
-                .collect(Collectors.toMap(PaperBasicDTO::getId, paperBasicDTO -> paperBasicDTO));
+        // 构造字典Map<paperId, paperObject>
+        Map<Integer, PaperSimpleDTO> paperBasicDict = paperBasicList.stream()
+                .collect(Collectors.toMap(PaperSimpleDTO::getId, paperBasicDTO -> paperBasicDTO));
 
         // 遍历tag，贴在对应Paper上
         List<TagPO> tagList = tagDao.listTagsByPaperIdList(new ArrayList<>(paperBasicDict.keySet()));
         tagList.forEach( item -> {
-            PaperBasicDTO paperBasicDTO = paperBasicDict.get(item.getPaperId());
+            PaperSimpleDTO paperSimpleDTO = paperBasicDict.get(item.getPaperId());
 
-            if (paperBasicDTO.getTagList() == null) {
-                paperBasicDTO.setTagList(new ArrayList<>());
+            if (paperSimpleDTO.getTagList() == null) {
+                paperSimpleDTO.setTagList(new ArrayList<>());
             }
-            paperBasicDTO.getTagList().add(item.getTagName());
+            paperSimpleDTO.getTagList().add(item.getTagName());
         });
     }
 
     @Override
     public Integer createTag(List<TagPO> tagList) {
         return tagDao.createTag(tagList);
+    }
+
+    @Override
+    public void deleteTagByPaperId(Integer paperId) {
+        tagDao.deleteTagByPaperId(paperId);
     }
 
     @Override

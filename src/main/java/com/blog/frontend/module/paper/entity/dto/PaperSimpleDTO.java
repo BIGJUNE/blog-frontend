@@ -17,7 +17,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PaperBasicDTO {
+public class PaperSimpleDTO {
     private Integer id;
     private String title;
     private String summary;

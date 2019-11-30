@@ -1,15 +1,11 @@
 package com.blog.frontend.module.paper.dao;
 
-import com.blog.frontend.module.paper.entity.dto.PaperBasicDTO;
-import com.blog.frontend.module.paper.entity.dto.PaperDetailDTO;
 import com.blog.frontend.module.paper.entity.PaperQuery;
 import com.blog.frontend.module.paper.entity.po.PaperPO;
 import com.blog.frontend.module.paper.entity.po.PaperVO;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
 
 @Mapper
 public interface IPaperDao {

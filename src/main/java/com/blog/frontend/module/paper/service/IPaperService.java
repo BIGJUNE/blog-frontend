@@ -2,12 +2,9 @@ package com.blog.frontend.module.paper.service;
 
 import com.blog.frontend.common.PageDTO;
 import com.blog.frontend.exception.BaseException;
-import com.blog.frontend.module.paper.entity.dto.PaperBasicDTO;
+import com.blog.frontend.module.paper.entity.dto.PaperSimpleDTO;
 import com.blog.frontend.module.paper.entity.dto.PaperDetailDTO;
 import com.blog.frontend.module.paper.entity.PaperQuery;
-import com.github.pagehelper.Page;
-
-import java.util.List;
 
 /**
  * TODO
@@ -26,7 +23,7 @@ public interface IPaperService {
      * @date 2019/11/16 15:37
      * @throws BaseException 通用异常
      */
-    PageDTO<PaperBasicDTO> listPaperBasic(PaperQuery paperQuery) throws BaseException;
+    PageDTO<PaperSimpleDTO> listPaperBasic(PaperQuery paperQuery) throws BaseException;
 
     /**
      * 根据id获取文章的详情信息
@@ -47,7 +44,7 @@ public interface IPaperService {
      * @date 2019/11/20 0:41
      * @throws BaseException 通用异常
      */
-    void createPaper(PaperDetailDTO paperDetailDTO) throws BaseException;
+    Integer createPaper(PaperDetailDTO paperDetailDTO) throws BaseException;
 
     /**
      * 编辑文章

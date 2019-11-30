@@ -23,4 +23,5 @@ public class PaperPO {
     private String summary;
     private Integer readCount;
     private Integer menuId;
+    private String text;
 }

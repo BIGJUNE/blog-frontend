@@ -26,13 +26,15 @@
     </select>
 
     <insert id="createTag">
-        INSERT INTO tag(paper_id, tag_name) VALUES (#{paperId}, #{tangName})
+        INSERT INTO tag(paper_id, tag_name) VALUES
         <foreach collection="tagList" index="index" item="item" separator=",">
-            (#{item.paperId}, #{item.tangName})
+            (#{item.paperId}, #{item.tagName})
         </foreach>
     </insert>
 
     <delete id="deleteTagByPaperId">
-        DELETE FROM tag t WHERE t.paperId = #{paperId}
+            UPDATE TAG t
+            SET t.active = 0
+            where t.paper_id = #{paperId}
     </delete>
 </mapper>
