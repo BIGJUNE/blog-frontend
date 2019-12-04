@@ -2,12 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.blog.frontend.module.like.dao.ILikeDao">
 
-    <insert id="createLike" parameterType="LikePO">
+    <insert id="createCommentOnPaper" parameterType="LikePO">
         INSERT INTO paper_like(paper_id, like_count, version) VALUES (#{paperId}, #{likeCount}, #{version})
     </insert>
 
     <select id="getLikeByPaperId" resultType="LikePO">
         SELECT paper_id, like_count, version FROM paper_like where paper_id = #{paperId}
     </select>
+
+<!--    <update id="addLikeCountByPaperId">-->
+<!--        UPDATE paper_like t-->
+<!--        SET t.like_count = t.like_count + 1-->
+<!--        where t.-->
+<!--    </update>-->
 
 </mapper>

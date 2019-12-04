@@ -16,4 +16,6 @@ import lombok.NoArgsConstructor;
 public class BaseQuery {
     private Integer perPage;
     private Integer curPage;
+    private String sortColumn;
+    private String sortDirection;
 }

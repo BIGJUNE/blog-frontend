@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 @Service
 public class PaperServiceImpl implements IPaperService {
 
-    private final static String OBJECT_NAME = "文章";
+    public final static String OBJECT_NAME = "文章";
 
     @Autowired
     private IPaperDao paperDao;

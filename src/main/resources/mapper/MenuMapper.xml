@@ -6,5 +6,4 @@
         SELECT id, name, parent_id, active, url FROM menu where active = 1;
     </select>
 
-
 </mapper>
