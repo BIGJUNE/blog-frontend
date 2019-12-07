@@ -5,9 +5,9 @@ import com.github.pagehelper.PageHelper;
 
 public class PageUtils {
 
-    private final static Integer DEFAULT_CUR_PAGE = 1;
-    private final static Integer DEFAULT_PER_PAGE = 10;
-    private final static Integer DISABLE_PAGING = 0;
+    public final static Integer DEFAULT_CUR_PAGE = 1;
+    public final static Integer DEFAULT_PER_PAGE = 10;
+    public final static Integer DISABLE_PAGING = 0;
 
     private PageUtils() {
 

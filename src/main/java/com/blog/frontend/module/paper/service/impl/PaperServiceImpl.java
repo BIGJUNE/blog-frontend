@@ -4,7 +4,6 @@ import com.blog.frontend.common.Constant;
 import com.blog.frontend.common.PageDTO;
 import com.blog.frontend.exception.BaseException;
 import com.blog.frontend.exception.ErrorCodeEnum;
-import com.blog.frontend.module.like.entity.LikePO;
 import com.blog.frontend.module.like.service.ILikeService;
 import com.blog.frontend.module.paper.dao.IPaperDao;
 import com.blog.frontend.module.paper.entity.dto.PaperSimpleDTO;
@@ -14,6 +13,7 @@ import com.blog.frontend.module.paper.entity.po.PaperPO;
 import com.blog.frontend.module.paper.entity.po.PaperVO;
 import com.blog.frontend.module.paper.service.IPaperService;
 import com.blog.frontend.module.tag.entity.TagPO;
+import com.blog.frontend.module.tag.entity.TagQuery;
 import com.blog.frontend.module.tag.service.ITagService;
 import com.blog.frontend.util.CommonUtils;
 import com.blog.frontend.util.PageUtils;
@@ -23,6 +23,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -57,7 +59,7 @@ public class PaperServiceImpl implements IPaperService {
         List<PaperSimpleDTO> paperSimpleDTOList = CommonUtils.copyBeanList(paperVOList, PaperSimpleDTO.class);
 
         // 加上标签
-        tagService.listTagsByPapers(paperSimpleDTOList);
+        tagService.bindTagsOnPapers(paperSimpleDTOList);
 
         return new PageDTO<>(paperVOList.getTotal(), paperSimpleDTOList);
     }
@@ -66,8 +68,13 @@ public class PaperServiceImpl implements IPaperService {
     public PaperDetailDTO getPaperDetail(Integer id) throws BaseException {
 
         PaperVO paperVo = paperDao.getPaperDetail(id);
+
+        if (Objects.isNull(paperVo)) {
+            throw new BaseException(ErrorCodeEnum.OBJECT_NON_EXISTENCE, Constant.PAPER_DISPLAY_NAME);
+        }
+
         PaperDetailDTO paperDetailDto = CommonUtils.copyBean(paperVo, PaperDetailDTO.class);
-        tagService.listTagsByPaper(paperDetailDto);
+        tagService.bindTagsOnPaper(paperDetailDto);
 
         return paperDetailDto;
     }
@@ -77,10 +84,7 @@ public class PaperServiceImpl implements IPaperService {
     @Transactional(rollbackFor = Exception.class)
     public Integer createPaper(PaperDetailDTO paperDetailDTO) throws BaseException {
         PaperPO paperPO = CommonUtils.copyBean(paperDetailDTO, PaperPO.class);
-        String text = paperPO.getText();
-        int summaryLength = Math.min(SUMMARY_LENGTH, text.length());
-        String summary = paperPO.getText().substring(0, summaryLength) + "...";
-        paperPO.setSummary(summary);
+        setPaperSummary(paperPO);
         paperDao.createPaper(paperPO);
 
         Integer paperId = paperPO.getId();
@@ -93,18 +97,27 @@ public class PaperServiceImpl implements IPaperService {
             tagService.createTag(tagList);
         }
 
-        // 为文字创建点赞数
-        likeService.createLike(new LikePO(paperId, LIKE_DEFAULT_AMOUNT, Constant.VERSION_INIT));
-
         return paperId;
     }
 
     @Override
     public void updatePaper(PaperDetailDTO paperDetailDTO) throws BaseException {
         PaperPO paperPO = CommonUtils.copyBean(paperDetailDTO, PaperPO.class);
+        setPaperSummary(paperPO);
         if (0 == paperDao.updatePaper(paperPO)) {
             throw new BaseException(ErrorCodeEnum.OBJECT_NON_EXISTENCE, OBJECT_NAME);
         }
+
+        // 更新tag
+        tagService.deleteTagByPaperId(paperPO.getId());
+        List<String> tagList = paperDetailDTO.getTagList();
+        if (Objects.nonNull(tagList) && !tagList.isEmpty()) {
+            List<TagPO> tagPOList = tagList.stream()
+                    .map(tagName -> new TagPO(paperPO.getId(), tagName))
+                    .collect(Collectors.toList());
+            tagService.createTag(tagPOList);
+        }
+
     }
 
     @Override
@@ -120,5 +133,11 @@ public class PaperServiceImpl implements IPaperService {
         if (0 == paperDao.enablePaper(paperId)) {
             throw new BaseException(ErrorCodeEnum.OBJECT_NON_EXISTENCE, OBJECT_NAME);
         }
+    }
+
+    private void setPaperSummary(PaperPO paperPO) {
+        int summaryLength = Math.min(SUMMARY_LENGTH, paperPO.getText().length());
+        String summary = paperPO.getText().substring(0, summaryLength) + "...";
+        paperPO.setSummary(summary);
     }
 }

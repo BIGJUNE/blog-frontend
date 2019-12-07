@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * TODO
@@ -20,6 +21,10 @@ public class CommonUtils {
     }
 
     public static<T, K> T copyBean(K source, Class<T> clazz) throws BaseException {
+
+        if (Objects.isNull(source)) {
+            return null;
+        }
 
         T target;
         try {

@@ -32,14 +32,14 @@ public class TagServiceImpl implements ITagService {
     private ITagDao tagDao;
 
     @Override
-    public void listTagsByPaper(PaperDetailDTO paperDetailDTO) {
-        List<TagPO> tagList = tagDao.listTagsByPaperIdList(Arrays.asList(paperDetailDTO.getId()));
+    public void bindTagsOnPaper(PaperDetailDTO paperDetailDTO) {
+        List<TagPO> tagList = tagDao.bindTagsOnPapers(Arrays.asList(paperDetailDTO.getId()));
         List<String> tagNameList = tagList.stream().map(TagPO::getTagName).collect(Collectors.toList());
         paperDetailDTO.setTagList(tagNameList);
     }
 
     @Override
-    public void listTagsByPapers(List<PaperSimpleDTO> paperBasicList) {
+    public void bindTagsOnPapers(List<PaperSimpleDTO> paperBasicList) {
 
         if (paperBasicList.isEmpty()) {
             return;
@@ -50,7 +50,7 @@ public class TagServiceImpl implements ITagService {
                 .collect(Collectors.toMap(PaperSimpleDTO::getId, paperBasicDTO -> paperBasicDTO));
 
         // 遍历tag，贴在对应Paper上
-        List<TagPO> tagList = tagDao.listTagsByPaperIdList(new ArrayList<>(paperBasicDict.keySet()));
+        List<TagPO> tagList = tagDao.bindTagsOnPapers(new ArrayList<>(paperBasicDict.keySet()));
         tagList.forEach( item -> {
             PaperSimpleDTO paperSimpleDTO = paperBasicDict.get(item.getPaperId());
 
@@ -72,12 +72,9 @@ public class TagServiceImpl implements ITagService {
     }
 
     @Override
-    public PageDTO<String> listTagsByTagName(String tagName) {
+    public PageDTO<String> listTags(TagQuery tagQuery) {
 
-        TagQuery tagQuery = new TagQuery();
-        tagQuery.setTagName(tagName);
-
-        PageUtils.paging(1, Constant.DEFAULT_PER_PAGE);
+        PageUtils.paging(tagQuery);
         Page<String> result = tagDao.listTagName(tagQuery);
 
         return new PageDTO<>(result.getTotal(), result);

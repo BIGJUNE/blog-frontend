@@ -35,7 +35,7 @@ public interface ITagDao {
      * @author JerryGao
      * @date 2019/11/18 00:15
      */
-    List<TagPO> listTagsByPaperIdList(List<Integer> paperIdList);
+    List<TagPO> bindTagsOnPapers(List<Integer> paperIdList);
 
     /**
      * 批量创建标签

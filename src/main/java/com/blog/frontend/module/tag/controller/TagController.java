@@ -3,6 +3,7 @@ package com.blog.frontend.module.tag.controller;
 import com.blog.frontend.common.PageDTO;
 import com.blog.frontend.common.RespResult;
 import com.blog.frontend.module.tag.entity.TagPO;
+import com.blog.frontend.module.tag.entity.TagQuery;
 import com.blog.frontend.module.tag.service.ITagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,8 @@ public class TagController {
 
     @GetMapping
     public RespResult<PageDTO<String>> listTags(@RequestParam(value = "tag_name", required = false) String tagName) {
-        return RespResult.success(tagService.listTagsByTagName(tagName));
+        TagQuery tagQuery = new TagQuery();
+        tagQuery.setTagName(tagName);
+        return RespResult.success(tagService.listTags(tagQuery));
     }
 }

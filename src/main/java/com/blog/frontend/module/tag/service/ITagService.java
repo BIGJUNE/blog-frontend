@@ -4,6 +4,7 @@ import com.blog.frontend.common.PageDTO;
 import com.blog.frontend.module.paper.entity.dto.PaperSimpleDTO;
 import com.blog.frontend.module.paper.entity.dto.PaperDetailDTO;
 import com.blog.frontend.module.tag.entity.TagPO;
+import com.blog.frontend.module.tag.entity.TagQuery;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public interface ITagService {
      * @author JerryGao
      * @date 2019/11/16 15:37
      */
-    void listTagsByPaper(PaperDetailDTO PaperDetailDTO);
+    void bindTagsOnPaper(PaperDetailDTO PaperDetailDTO);
 
     /**
      * 给paper列表中的所有paper加上tag
@@ -29,17 +30,17 @@ public interface ITagService {
      * @author JerryGao
      * @date 2019/11/16 15:37
      */
-    void listTagsByPapers(List<PaperSimpleDTO> paperSimpleDTOList);
+    void bindTagsOnPapers(List<PaperSimpleDTO> paperSimpleDTOList);
 
     /**
-     * 模糊搜索获得匹配的标签列表
+     * 搜索tag列表
      *
-     * @param tagName 标签名或名称的部分
+     * @param tagQuery 查询参数
      * @return com.blog.frontend.common.PageDTO<java.lang.String>
      * @author JerryGao
      * @date 2019/11/18 23:50
      */
-    PageDTO<String> listTagsByTagName(String tagName);
+    PageDTO<String> listTags(TagQuery tagQuery);
 
     /**
      * 创建标贴

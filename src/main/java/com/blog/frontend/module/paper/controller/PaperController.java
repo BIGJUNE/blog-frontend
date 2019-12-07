@@ -29,7 +29,7 @@ public class PaperController {
     }
 
     @GetMapping
-    public RespResult<PageDTO<PaperSimpleDTO>> listPaperBasic(@RequestParam(value = "cur_page", defaultValue = "0") Integer curPage,
+    public RespResult<PageDTO<PaperSimpleDTO>> listPaperBasic(@RequestParam(value = "cur_page", defaultValue = "1") Integer curPage,
                                                               @RequestParam(value = "per_page", defaultValue = "10") Integer perPage,
                                                               @RequestParam(value = "title", required = false) String title)
             throws BaseException {
@@ -53,6 +53,7 @@ public class PaperController {
     public RespResult updatePaper(@PathVariable("paper_id") Integer paperId,
                                   @RequestBody PaperDetailDTO paperDetailDTO) throws BaseException {
         paperDetailDTO.setId(paperId);
+
         paperService.updatePaper(paperDetailDTO);
         return RespResult.success();
     }

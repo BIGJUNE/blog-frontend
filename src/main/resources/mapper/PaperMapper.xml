@@ -3,14 +3,12 @@
 <mapper namespace="com.blog.frontend.module.paper.dao.IPaperDao">
 
     <select id="getPaperDetail" resultType="PaperVO">
-        SELECT p.id, p.title, p.text, p.create_time, p.update_time, p.read_count, pl.like_count, p.summary, p.menu_id,
-            p.enable,
+        SELECT p.id, p.title, p.text, p.create_time, p.update_time, p.read_count, p.summary, p.menu_id, p.enable,
             case
                 when temp.comment_count is null then 0
                 else temp.comment_count
             end as comment_count
         FROM paper p
-        INNER JOIN paper_like pl on p.id = pl.paper_id
         LEFT JOIN (
             SELECT count(*) AS comment_count, pc.paper_id
             FROM paper_comment pc
@@ -21,14 +19,12 @@
     </select>
 
     <select id="listPaperBasic" resultType="PaperVO" parameterType="PaperQuery">
-        SELECT p.id, p.title, p.summary, p.create_time, p.update_time, prc.read_count, pl.like_count,
+        SELECT p.id, p.title, p.summary, p.create_time, p.update_time, p.read_count, p.menu_id,
             case
                 when temp.comment_count is null then 0
                 else temp.comment_count
             end as comment_count
         FROM paper p
-        INNER JOIN paper_like pl on p.id = pl.paper_id
-        INNER JOIN paper_read_count prc on p.id = prc.paper_id
         LEFT JOIN (
             SELECT count(*) AS comment_count, pc.paper_id
             FROM paper_comment pc
@@ -59,6 +55,9 @@
             </if>
             <if test="menuId != null">
                 t.menu_id = #{menuId},
+            </if>
+            <if test="summary != null">
+                t.summary = #{summary},
             </if>
             t.update_time = sysdate()
         </set>
