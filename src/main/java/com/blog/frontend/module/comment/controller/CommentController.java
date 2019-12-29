@@ -45,13 +45,13 @@ public class CommentController {
     public RespResult<PageDTO<CommentDTO>> listCommentsByPaperId(@PathVariable("paperId") Integer paperId,
                                                      @RequestParam("cur_page") Integer curPage,
                                                      @RequestParam("per_page") Integer perPage,
-                                                     @RequestParam("sort_column") String sortColumn,
+                                                     @RequestParam("sort_by") String sortBy,
                                                      @RequestParam("sort_direction") String sortDirection) throws BaseException {
 
         CommentQuery commentQuery = new CommentQuery(paperId);
         commentQuery.setCurPage(curPage);
         commentQuery.setPerPage(perPage);
-        commentQuery.setSortColumn(sortColumn);
+        commentQuery.setSortBy(sortBy);
         commentQuery.setSortDirection(sortDirection);
 
         return RespResult.success(commentService.listCommentsByPaperId(commentQuery));

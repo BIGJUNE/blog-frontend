@@ -3,7 +3,7 @@
 <mapper namespace="com.blog.frontend.module.paper.dao.IPaperDao">
 
     <select id="getPaperDetail" resultType="PaperVO">
-        SELECT p.id, p.title, p.text, p.create_time, p.update_time, p.read_count, p.summary, p.menu_id, p.enable,
+        SELECT p.id, p.title, p.text, p.create_time, p.update_time, p.read_count, p.summary, p.menu_id, p.enable, p.paper_type,
             case
                 when temp.comment_count is null then 0
                 else temp.comment_count
@@ -19,7 +19,7 @@
     </select>
 
     <select id="listPaperBasic" resultType="PaperVO" parameterType="PaperQuery">
-        SELECT p.id, p.title, p.summary, p.create_time, p.update_time, p.read_count, p.menu_id,
+        SELECT p.id, p.title, p.summary, p.create_time, p.update_time, p.read_count, p.menu_id, p.paper_type,
             case
                 when temp.comment_count is null then 0
                 else temp.comment_count
@@ -33,15 +33,34 @@
         ) temp on temp.paper_id = p.id
         <where>
             p.enable = 1 and p.active = 1
-            <if test="title != null and !title.isEmpty">
-                p.title = #{title}
+            <if test="title != null and !title.isEmpty()">
+               and p.title = #{title}
+            </if>
+            <if test="paperType != null">
+               and p.paper_type = #{paperType}
             </if>
         </where>
+        <choose>
+            <when test="sortBy != null and !sortBy.isEmpty()">
+                order by p.${soryBy}
+            </when>
+            <otherwise>
+                order by p.create_time
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="sortDirection != null and !sortDirection.isEmpty()">
+                p.${sortDirection}
+            </when>
+            <otherwise>
+                desc
+            </otherwise>
+        </choose>
     </select>
 
     <insert id="createPaper" parameterType="PaperPO" keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO paper(title, text, create_time, summary, menu_id)
-        VALUES(#{title}, #{text}, sysdate(), #{summary}, #{menuId})
+        INSERT INTO paper(title, text, create_time, summary, menu_id, paper_type)
+        VALUES(#{title}, #{text}, sysdate(), #{summary}, #{menuId}, #{paperType})
     </insert>
 
     <update id="updatePaper" parameterType="PaperPO">
@@ -58,6 +77,9 @@
             </if>
             <if test="summary != null">
                 t.summary = #{summary},
+            </if>
+            <if test="paperType != null">
+                t.paper_type = #{paperType}
             </if>
             t.update_time = sysdate()
         </set>

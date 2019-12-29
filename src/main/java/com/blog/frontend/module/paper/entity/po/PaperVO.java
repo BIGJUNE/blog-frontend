@@ -30,4 +30,5 @@ public class PaperVO {
     private Integer active;
     private Integer enable;
     private Integer menuId;
+    private Integer paperType;
 }

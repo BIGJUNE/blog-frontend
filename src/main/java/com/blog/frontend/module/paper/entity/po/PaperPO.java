@@ -24,4 +24,5 @@ public class PaperPO {
     private Integer readCount;
     private Integer menuId;
     private String text;
+    private Integer paperType;
 }

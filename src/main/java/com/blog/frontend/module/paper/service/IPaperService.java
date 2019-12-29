@@ -1,10 +1,13 @@
 package com.blog.frontend.module.paper.service;
 
+import com.blog.frontend.common.HomeDTO;
 import com.blog.frontend.common.PageDTO;
 import com.blog.frontend.exception.BaseException;
 import com.blog.frontend.module.paper.entity.dto.PaperSimpleDTO;
 import com.blog.frontend.module.paper.entity.dto.PaperDetailDTO;
 import com.blog.frontend.module.paper.entity.PaperQuery;
+
+import java.util.List;
 
 /**
  * TODO
@@ -73,5 +76,14 @@ public interface IPaperService {
      * @date 2019/11/25 0:50
      */
     void enablePaper(Integer paperId) throws BaseException;
+
+    /**
+     * 查询首页
+     *
+     * @return com.blog.frontend.common.HomeDTO
+     * @author JerryGao
+     * @date 2019/12/21 11:32
+     */
+    HomeDTO listHomePapers() throws BaseException;
         
 }

@@ -1,11 +1,13 @@
 package com.blog.frontend.module.paper.service.impl;
 
 import com.blog.frontend.common.Constant;
+import com.blog.frontend.common.HomeDTO;
 import com.blog.frontend.common.PageDTO;
 import com.blog.frontend.exception.BaseException;
 import com.blog.frontend.exception.ErrorCodeEnum;
 import com.blog.frontend.module.like.service.ILikeService;
 import com.blog.frontend.module.paper.dao.IPaperDao;
+import com.blog.frontend.module.paper.entity.PaperTypeEnum;
 import com.blog.frontend.module.paper.entity.dto.PaperSimpleDTO;
 import com.blog.frontend.module.paper.entity.dto.PaperDetailDTO;
 import com.blog.frontend.module.paper.entity.PaperQuery;
@@ -133,6 +135,20 @@ public class PaperServiceImpl implements IPaperService {
         if (0 == paperDao.enablePaper(paperId)) {
             throw new BaseException(ErrorCodeEnum.OBJECT_NON_EXISTENCE, OBJECT_NAME);
         }
+    }
+
+    @Override
+    public HomeDTO listHomePapers() throws BaseException {
+        PaperQuery paperQuery = new PaperQuery();
+        paperQuery.setPaperType(PaperTypeEnum.BLOG.getCode());
+        PageUtils.paging(paperQuery);
+        PageDTO blogDTO = listPaperBasic(paperQuery);
+
+        paperQuery.setPaperType(PaperTypeEnum.NOTE.getCode());
+        PageUtils.paging(paperQuery);
+        PageDTO pageDTO = listPaperBasic(paperQuery);
+
+        return new HomeDTO(blogDTO.getList(), pageDTO.getList());
     }
 
     private void setPaperSummary(PaperPO paperPO) {

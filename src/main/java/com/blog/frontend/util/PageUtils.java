@@ -27,10 +27,8 @@ public class PageUtils {
             perPage = DEFAULT_PER_PAGE;
         }
 
-        // 不进行分页
-        if (DISABLE_PAGING.equals(perPage)) {
-            PageHelper.clearPage();
-        } else {
+        PageHelper.clearPage();
+        if (!DISABLE_PAGING.equals(perPage)) {
             PageHelper.startPage(curPage, perPage);
         }
     }

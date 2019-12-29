@@ -1,5 +1,6 @@
 package com.blog.frontend.module.paper.controller;
 
+import com.blog.frontend.common.HomeDTO;
 import com.blog.frontend.common.PageDTO;
 import com.blog.frontend.common.RespResult;
 import com.blog.frontend.exception.BaseException;
@@ -9,6 +10,8 @@ import com.blog.frontend.module.paper.entity.dto.PaperDetailDTO;
 import com.blog.frontend.module.paper.service.IPaperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 文章模块的Controller
@@ -41,6 +44,11 @@ public class PaperController {
         PageDTO<PaperSimpleDTO> result = paperService.listPaperBasic(paperQuery);
 
         return RespResult.success(result);
+    }
+
+    @GetMapping("/home_papers")
+    public RespResult<HomeDTO> listHomePaper() throws BaseException {
+        return RespResult.success(paperService.listHomePapers());
     }
 
     @PostMapping

@@ -20,4 +20,5 @@ import lombok.NoArgsConstructor;
 public class PaperQuery extends BaseQuery {
     private String title;
     private Integer menuId;
+    private Integer paperType;
 }
