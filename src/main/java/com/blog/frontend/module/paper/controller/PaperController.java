@@ -8,6 +8,7 @@ import com.blog.frontend.module.paper.entity.PaperQuery;
 import com.blog.frontend.module.paper.entity.dto.PaperSimpleDTO;
 import com.blog.frontend.module.paper.entity.dto.PaperDetailDTO;
 import com.blog.frontend.module.paper.service.IPaperService;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,10 +35,12 @@ public class PaperController {
     @GetMapping
     public RespResult<PageDTO<PaperSimpleDTO>> listPaperBasic(@RequestParam(value = "cur_page", defaultValue = "1") Integer curPage,
                                                               @RequestParam(value = "per_page", defaultValue = "10") Integer perPage,
-                                                              @RequestParam(value = "title", required = false) String title)
+                                                              @RequestParam(value = "title", required = false) String title,
+                                                              @RequestParam(value = "paper_type") Integer paperType)
             throws BaseException {
         PaperQuery paperQuery = new PaperQuery();
         paperQuery.setTitle(title);
+        paperQuery.setPaperType(paperType);
         paperQuery.setCurPage(curPage);
         paperQuery.setPerPage(perPage);
 
