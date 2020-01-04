@@ -36,7 +36,7 @@ public class PaperController {
     public RespResult<PageDTO<PaperSimpleDTO>> listPaperBasic(@RequestParam(value = "cur_page", defaultValue = "1") Integer curPage,
                                                               @RequestParam(value = "per_page", defaultValue = "10") Integer perPage,
                                                               @RequestParam(value = "title", required = false) String title,
-                                                              @RequestParam(value = "paper_type") Integer paperType)
+                                                              @RequestParam(value = "paper_type", required = false) Integer paperType)
             throws BaseException {
         PaperQuery paperQuery = new PaperQuery();
         paperQuery.setTitle(title);
