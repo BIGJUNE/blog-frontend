@@ -8,7 +8,8 @@ package com.blog.frontend.module.paper.entity;
  */
 public enum PaperTypeEnum {
     BLOG(1, "博客"),
-    NOTE(2, "笔记")
+    NOTE(2, "笔记"),
+    ABOUT(3, "About")
     ;
 
     private Integer code;
