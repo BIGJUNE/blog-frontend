@@ -14,7 +14,11 @@ public enum ErrorCodeEnum {
 
     OBJECT_REPEAT(-2, "%s已存在"),
 
-    OBJECT_NON_EXISTENCE(-3, "%s不存在")
+    OBJECT_NON_EXISTENCE(-3, "%s不存在"),
+
+    NOT_LOGIN(-4, "用户未登录"),
+
+    LOGIN_FAILED(-5, "登录失败，用户名不存在或密码错误")
     ;
     private int code;
     private String message;

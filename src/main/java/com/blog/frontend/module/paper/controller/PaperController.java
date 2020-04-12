@@ -49,11 +49,6 @@ public class PaperController {
         return RespResult.success(result);
     }
 
-    @GetMapping("/home_papers")
-    public RespResult<HomeDTO> listHomePaper() throws BaseException {
-        return RespResult.success(paperService.listHomePapers());
-    }
-
     @PostMapping
     public RespResult<Integer> createPaper(@RequestBody PaperDetailDTO paperDetailDTO) throws BaseException {
 
